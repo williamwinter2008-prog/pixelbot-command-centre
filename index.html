@@ -3,864 +3,466 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<title>PixelBot Command Centre</title>
 
-    <title>PixelBot — Command Centre</title>
+<style>
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    <style>
 
-        /* ==================================================
-           GLOBAL RESET
-        ================================================== */
+body {
 
-        * {
+    min-height: 100vh;
 
-            margin: 0;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-            padding: 0;
+    color: white;
 
-            box-sizing: border-box;
+    background:
 
-        }
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(30,90,200,0.25),
+            transparent 35%
+        ),
 
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(10,50,130,0.25),
+            transparent 40%
+        ),
 
-        /* ==================================================
-           BODY
-        ================================================== */
+        linear-gradient(
+            135deg,
+            #01030a,
+            #020817,
+            #03142e
+        );
 
-        body {
+    overflow: hidden;
 
-            min-height: 100vh;
+}
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
 
-            color: white;
+/* stars */
 
-            background:
+body::before {
 
-                radial-gradient(
-                    circle at 15% 20%,
-                    rgba(
-                        20,
-                        65,
-                        140,
-                        0.18
-                    ),
-                    transparent 30%
-                ),
+    content:"";
 
-                radial-gradient(
-                    circle at 85% 80%,
-                    rgba(
-                        15,
-                        45,
-                        110,
-                        0.15
-                    ),
-                    transparent 35%
-                ),
+    position:fixed;
 
-                linear-gradient(
-                    135deg,
-                    #01030a,
-                    #020817,
-                    #030d20,
-                    #04152d
-                );
+    inset:0;
 
-            overflow-x:
-                hidden;
+    background-image:
 
-        }
+        radial-gradient(
+            white 1px,
+            transparent 1px
+        );
 
+    background-size:
+        120px 120px;
 
-        /* ==================================================
-           STAR FIELD
-        ================================================== */
+    opacity:
+        0.15;
 
-        body::after {
+}
 
-            content: "";
 
-            position: fixed;
+/* top bar */
 
-            inset: 0;
+nav {
 
-            pointer-events:
-                none;
+    height:80px;
 
-            opacity:
-                0.15;
+    display:flex;
 
-            background-image:
+    align-items:center;
 
-                radial-gradient(
-                    white 1px,
-                    transparent 1px
-                );
+    justify-content:space-between;
 
-            background-size:
-                140px 140px;
+    padding:
+        0 60px;
 
-            z-index:
-                0;
+    background:
+        rgba(
+            0,
+            5,
+            20,
+            0.7
+        );
 
-        }
+    border-bottom:
+        1px solid
+        rgba(
+            80,
+            140,
+            255,
+            0.15
+        );
 
+    backdrop-filter:
+        blur(15px);
 
-        /* ==================================================
-           TOP NAVIGATION
-        ================================================== */
+}
 
-        nav {
 
-            height:
-                76px;
 
-            display:
-                flex;
+.logo {
 
-            align-items:
-                center;
+    display:flex;
 
-            justify-content:
-                space-between;
+    align-items:center;
 
-            padding:
-                0 55px;
+    gap:12px;
 
-            background:
-                rgba(
-                    1,
-                    4,
-                    12,
-                    0.75
-                );
+    font-size:
+        22px;
 
-            border-bottom:
-                1px solid
-                rgba(
-                    90,
-                    150,
-                    255,
-                    0.12
-                );
+    font-weight:
+        bold;
 
-            backdrop-filter:
-                blur(
-                    20px
-                );
+}
 
-            position:
-                relative;
 
-            z-index:
-                10;
+.logo-box {
 
-        }
+    width:42px;
 
+    height:42px;
 
-        /* ==================================================
-           LOGO
-        ================================================== */
+    display:flex;
 
-        .logo {
+    align-items:center;
 
-            display:
-                flex;
+    justify-content:center;
 
-            align-items:
-                center;
+    border-radius:12px;
 
-            gap:
-                12px;
+    background:
 
-            font-size:
-                21px;
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #0b2a66
+        );
 
-            font-weight:
-                bold;
+    box-shadow:
 
-            letter-spacing:
-                0.5px;
+        0 0 25px
+        rgba(
+            37,
+            99,
+            235,
+            0.5
+        );
 
-        }
+}
 
 
-        .logo-symbol {
+/* login */
 
-            width:
-                40px;
+.login {
 
-            height:
-                40px;
+    padding:
+        12px 22px;
 
-            display:
-                flex;
+    border-radius:
+        10px;
 
-            align-items:
-                center;
+    text-decoration:none;
 
-            justify-content:
-                center;
+    color:white;
 
-            border-radius:
-                12px;
+    background:
+        rgba(
+            88,
+            101,
+            242,
+            0.25
+        );
 
-            background:
+    border:
+        1px solid
+        rgba(
+            88,
+            101,
+            242,
+            0.6
+        );
 
-                linear-gradient(
-                    135deg,
-                    #0f3d91,
-                    #071b45
-                );
+    font-weight:bold;
 
-            border:
-                1px solid
-                rgba(
-                    80,
-                    150,
-                    255,
-                    0.3
-                );
+    transition:
+        .3s;
 
-            box-shadow:
+}
 
-                0 0 25px
-                rgba(
-                    30,
-                    100,
-                    255,
-                    0.2
-                );
 
-        }
+.login:hover {
 
+    transform:
+        translateY(-3px);
 
-        /* ==================================================
-           NAVIGATION LINKS
-        ================================================== */
+    box-shadow:
 
-        .nav-links {
+        0 0 30px
+        rgba(
+            88,
+            101,
+            242,
+            0.5
+        );
 
-            display:
-                flex;
+}
 
-            gap:
-                30px;
 
-        }
 
+/* main */
 
-        .nav-links a {
+.container {
 
-            color:
-                #7f91aa;
+    min-height:
+        calc(
+            100vh - 80px
+        );
 
-            text-decoration:
-                none;
+    display:flex;
 
-            font-size:
-                14px;
+    align-items:center;
 
-            transition:
-                0.2s;
+    justify-content:center;
 
-        }
+    text-align:center;
 
+}
 
-        .nav-links a:hover {
 
-            color:
-                white;
+.content {
 
-        }
+    max-width:
+        800px;
 
+}
 
-        /* ==================================================
-           LOGIN BUTTON
-        ================================================== */
 
-        .login-button {
 
-            padding:
-                11px 19px;
+/* status */
 
-            border-radius:
-                9px;
+.status {
 
-            background:
-                rgba(
-                    37,
-                    99,
-                    235,
-                    0.15
-                );
+    display:inline-flex;
 
-            border:
-                1px solid
-                rgba(
-                    59,
-                    130,
-                    246,
-                    0.35
-                );
+    align-items:center;
 
-            color:
-                #b9d4ff;
+    gap:10px;
 
-            text-decoration:
-                none;
+    padding:
+        8px 18px;
 
-            font-size:
-                14px;
+    border-radius:
+        50px;
 
-            font-weight:
-                bold;
+    background:
+        rgba(
+            30,
+            80,
+            160,
+            0.2
+        );
 
-            transition:
-                0.25s;
+    border:
+        1px solid
+        rgba(
+            80,
+            140,
+            255,
+            0.25
+        );
 
-        }
+    color:
+        #9fc4ff;
 
+    margin-bottom:
+        30px;
 
-        .login-button:hover {
+}
 
-            background:
-                rgba(
-                    37,
-                    99,
-                    235,
-                    0.3
-                );
 
-            box-shadow:
+.dot {
 
-                0 0 25px
-                rgba(
-                    37,
-                    99,
-                    235,
-                    0.2
-                );
+    width:8px;
 
-        }
+    height:8px;
 
+    background:
+        #3b82f6;
 
-        /* ==================================================
-           MAIN HERO
-        ================================================== */
+    border-radius:50%;
 
-        .hero {
+    box-shadow:
 
-            min-height:
-                calc(
-                    100vh - 76px
-                );
+        0 0 15px
+        #3b82f6;
 
-            display:
-                flex;
+}
 
-            align-items:
-                center;
 
-            justify-content:
-                center;
 
-            padding:
-                70px 30px;
+/* title */
 
-            position:
-                relative;
+h1 {
 
-            z-index:
-                1;
+    font-size:
+        clamp(
+            55px,
+            8vw,
+            95px
+        );
 
-        }
+    line-height:
+        1;
 
+    letter-spacing:
+        -3px;
 
-        .hero-content {
+    margin-bottom:
+        25px;
 
-            width:
-                100%;
+}
 
-            max-width:
-                1050px;
 
-            text-align:
-                center;
+.blue {
 
-        }
+    color:
+        #4f8cff;
 
+    text-shadow:
 
-        /* ==================================================
-           STATUS LABEL
-        ================================================== */
+        0 0 40px
+        rgba(
+            70,
+            130,
+            255,
+            0.4
+        );
 
-        .status {
+}
 
-            display:
-                inline-flex;
 
-            align-items:
-                center;
 
-            gap:
-                8px;
+p {
 
-            padding:
-                8px 14px;
+    color:
+        #8294b0;
 
-            margin-bottom:
-                28px;
+    font-size:
+        18px;
 
-            border-radius:
-                999px;
+    line-height:
+        1.7;
 
-            background:
-                rgba(
-                    15,
-                    40,
-                    80,
-                    0.35
-                );
+    margin-bottom:
+        45px;
 
-            border:
-                1px solid
-                rgba(
-                    80,
-                    140,
-                    220,
-                    0.2
-                );
+}
 
-            color:
-                #8ba9d1;
 
-            font-size:
-                13px;
 
-        }
+/* enter button */
 
+.enter {
 
-        .status-dot {
+    display:inline-flex;
 
-            width:
-                7px;
+    align-items:center;
 
-            height:
-                7px;
+    gap:10px;
 
-            border-radius:
-                50%;
+    padding:
+        16px 35px;
 
-            background:
-                #3b82f6;
+    border-radius:
+        12px;
 
-            box-shadow:
+    text-decoration:none;
 
-                0 0 10px
-                #3b82f6;
+    color:white;
 
-        }
+    font-weight:bold;
 
+    background:
 
-        /* ==================================================
-           MAIN TITLE
-        ================================================== */
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #123778
+        );
 
-        h1 {
 
-            font-size:
-                clamp(
-                    48px,
-                    8vw,
-                    88px
-                );
+    box-shadow:
 
-            line-height:
-                1.05;
+        0 0 40px
+        rgba(
+            37,
+            99,
+            235,
+            0.35
+        );
 
-            letter-spacing:
-                -3px;
+    transition:
+        .3s;
 
-            margin-bottom:
-                25px;
+}
 
-        }
 
+.enter:hover {
 
-        .title-blue {
+    transform:
+        translateY(-5px);
 
-            color:
-                #4f91ff;
+    box-shadow:
 
-            text-shadow:
+        0 0 55px
+        rgba(
+            37,
+            99,
+            235,
+            0.6
+        );
 
-                0 0 40px
-                rgba(
-                    50,
-                    120,
-                    255,
-                    0.2
-                );
+}
 
-        }
 
 
-        /* ==================================================
-           DESCRIPTION
-        ================================================== */
+/* bottom system */
 
-        .description {
+.system {
 
-            max-width:
-                620px;
+    margin-top:
+        70px;
 
-            margin:
-                0 auto 40px;
+    color:
+        #64748b;
 
-            color:
-                #788ba5;
+    font-size:
+        13px;
 
-            font-size:
-                17px;
+}
 
-            line-height:
-                1.7;
 
-        }
-
-
-        /* ==================================================
-           COMMAND BUTTON
-        ================================================== */
-
-        .command-button {
-
-            display:
-                inline-flex;
-
-            align-items:
-                center;
-
-            gap:
-                10px;
-
-            padding:
-                15px 26px;
-
-            border-radius:
-                10px;
-
-            background:
-
-                linear-gradient(
-                    135deg,
-                    #1451b4,
-                    #0b3277
-                );
-
-            border:
-                1px solid
-                rgba(
-                    70,
-                    140,
-                    255,
-                    0.35
-                );
-
-            color:
-                white;
-
-            text-decoration:
-                none;
-
-            font-weight:
-                bold;
-
-            box-shadow:
-
-                0 0 35px
-                rgba(
-                    20,
-                    80,
-                    200,
-                    0.2
-                );
-
-            transition:
-                0.25s;
-
-        }
-
-
-        .command-button:hover {
-
-            transform:
-                translateY(
-                    -3px
-                );
-
-            box-shadow:
-
-                0 0 45px
-                rgba(
-                    30,
-                    100,
-                    255,
-                    0.35
-                );
-
-        }
-
-
-        /* ==================================================
-           COMMAND CENTRE PREVIEW
-        ================================================== */
-
-        .preview {
-
-            margin:
-                70px auto 0;
-
-            max-width:
-                850px;
-
-            padding:
-                25px;
-
-            border-radius:
-                18px;
-
-            background:
-                rgba(
-                    4,
-                    15,
-                    35,
-                    0.55
-                );
-
-            border:
-                1px solid
-                rgba(
-                    80,
-                    140,
-                    220,
-                    0.15
-                );
-
-            box-shadow:
-
-                0 30px 80px
-                rgba(
-                    0,
-                    0,
-                    0,
-                    0.4
-                );
-
-            backdrop-filter:
-                blur(
-                    20px
-                );
-
-        }
-
-
-        .preview-header {
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                space-between;
-
-            margin-bottom:
-                20px;
-
-            color:
-                #6f87a8;
-
-            font-size:
-                12px;
-
-            text-transform:
-                uppercase;
-
-            letter-spacing:
-                1px;
-
-        }
-
-
-        .preview-grid {
-
-            display:
-                grid;
-
-            grid-template-columns:
-                repeat(
-                    3,
-                    1fr
-                );
-
-            gap:
-                12px;
-
-        }
-
-
-        .preview-item {
-
-            padding:
-                20px;
-
-            border-radius:
-                12px;
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.025
-                );
-
-            border:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.05
-                );
-
-            text-align:
-                left;
-
-            transition:
-                0.2s;
-
-        }
-
-
-        .preview-item:hover {
-
-            border-color:
-                rgba(
-                    60,
-                    130,
-                    255,
-                    0.3
-                );
-
-            background:
-                rgba(
-                    30,
-                    80,
-                    160,
-                    0.08
-                );
-
-        }
-
-
-        .preview-icon {
-
-            font-size:
-                22px;
-
-            margin-bottom:
-                12px;
-
-        }
-
-
-        .preview-item h3 {
-
-            font-size:
-                14px;
-
-            margin-bottom:
-                6px;
-
-        }
-
-
-        .preview-item p {
-
-            color:
-                #667b99;
-
-            font-size:
-                12px;
-
-        }
-
-
-        /* ==================================================
-           MOBILE
-        ================================================== */
-
-        @media (
-            max-width: 750px
-        ) {
-
-            nav {
-
-                padding:
-                    0 20px;
-
-            }
-
-
-            .nav-links {
-
-                display:
-                    none;
-
-            }
-
-
-            .hero {
-
-                padding:
-                    50px 20px;
-
-            }
-
-
-            h1 {
-
-                letter-spacing:
-                    -2px;
-
-            }
-
-
-            .preview-grid {
-
-                grid-template-columns:
-                    1fr;
-
-            }
-
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -868,265 +470,88 @@
 <body>
 
 
-    <!-- ==================================================
-         NAVIGATION
-    ================================================== -->
+<nav>
 
-    <nav>
 
+<div class="logo">
 
-        <div class="logo">
+<div class="logo-box">
+🌌
+</div>
 
+PixelBot
 
-            <div class="logo-symbol">
+</div>
 
-                🌌
 
-            </div>
+<a href="/api/discord-login" class="login">
+Login with Discord
+</a>
 
 
-            PixelBot
+</nav>
 
 
-        </div>
 
+<div class="container">
 
 
-        <div class="nav-links">
+<div class="content">
 
-            <a href="#">
 
-                Home
+<div class="status">
 
-            </a>
+<span class="dot"></span>
 
-            <a href="#">
+PixelBot Systems Online
 
-                Features
+</div>
 
-            </a>
 
-            <a href="#">
 
-                Premium
+<h1>
 
-            </a>
+Enter the
 
-        </div>
+<span class="blue">
+Command Centre
+</span>
 
+</h1>
 
 
-        <a
-            href="/api/discord-login"
-            class="login-button"
-        >
 
-            Login with Discord
+<p>
 
-        </a>
+Manage your Discord servers,
+control PixelBot,
+and access your server tools
+from one futuristic dashboard.
 
+</p>
 
-    </nav>
 
 
+<a href="/api/discord-login" class="enter">
 
-    <!-- ==================================================
-         HERO
-    ================================================== -->
+🚀 Launch PixelBot
 
-    <main
-        class="hero"
-    >
+</a>
 
 
-        <div
-            class="hero-content"
-        >
 
+<div class="system">
 
-            <div
-                class="status"
-            >
+SECURE CONNECTION • DISCORD AUTH • PIXELBOT V2
 
-                <span
-                    class="status-dot"
-                ></span>
+</div>
 
-                PixelBot Command Centre
 
-            </div>
+</div>
 
 
+</div>
 
-            <h1>
-
-                Your server.
-
-                <span
-                    class="title-blue"
-                >
-
-                    Your command.
-
-                </span>
-
-            </h1>
-
-
-
-            <p
-                class="description"
-            >
-
-                A powerful command centre for
-                managing your Discord communities.
-                Control your server, configure PixelBot,
-                and keep everything in one place.
-
-            </p>
-
-
-
-            <a
-                href="/api/discord-login"
-                class="command-button"
-            >
-
-                Enter Command Centre
-
-                →
-
-            </a>
-
-
-
-            <!-- ==================================================
-                 PREVIEW
-            ================================================== -->
-
-            <div
-                class="preview"
-            >
-
-
-                <div
-                    class="preview-header"
-                >
-
-                    <span>
-
-                        PixelBot Systems
-
-                    </span>
-
-                    <span>
-
-                        ● Online
-
-                    </span>
-
-                </div>
-
-
-
-                <div
-                    class="preview-grid"
-                >
-
-
-                    <div
-                        class="preview-item"
-                    >
-
-                        <div
-                            class="preview-icon"
-                        >
-
-                            🛡️
-
-                        </div>
-
-                        <h3>
-
-                            Moderation
-
-                        </h3>
-
-                        <p>
-
-                            Keep your community safe.
-
-                        </p>
-
-                    </div>
-
-
-
-                    <div
-                        class="preview-item"
-                    >
-
-                        <div
-                            class="preview-icon"
-                        >
-
-                            📈
-
-                        </div>
-
-                        <h3>
-
-                            Leveling
-
-                        </h3>
-
-                        <p>
-
-                            Reward your community.
-
-                        </p>
-
-                    </div>
-
-
-
-                    <div
-                        class="preview-item"
-                    >
-
-                        <div
-                            class="preview-icon"
-                        >
-
-                            ⚙️
-
-                        </div>
-
-                        <h3>
-
-                            Configuration
-
-                        </h3>
-
-                        <p>
-
-                            Configure PixelBot your way.
-
-                        </p>
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-
-    </main>
 
 
 </body>
