@@ -249,7 +249,7 @@ color:#22c55e;
 
 <div class="profile">
 
-<img id="avatar"
+<img id="avatar">
 src="https://cdn.discordapp.com/embed/avatars/0.png">
 
 
@@ -257,6 +257,8 @@ src="https://cdn.discordapp.com/embed/avatars/0.png">
 Account
 </span>
 
+
+<div id="server-grid">
 
 </div>
 
@@ -453,6 +455,150 @@ loadServers();
 
 
 </script>
+  async function loadUser(){
+
+    const response =
+        await fetch("/api/me");
+
+
+    if(response.ok){
+
+        const user =
+            await response.json();
+
+
+        document.getElementById(
+            "username"
+        ).textContent =
+            user.username;
+
+
+        if(user.avatar){
+
+            document.getElementById(
+                "avatar"
+            ).src =
+            `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+
+        }
+
+
+    }
+
+}
+
+
+
+async function loadServers(){
+
+
+    const grid =
+        document.getElementById(
+            "server-grid"
+        );
+
+
+
+    try{
+
+
+        const response =
+            await fetch(
+                "/api/servers"
+            );
+
+
+        const servers =
+            await response.json();
+
+
+
+        grid.innerHTML = "";
+
+
+
+        servers.forEach(
+            server => {
+
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "server-card";
+
+
+
+                card.innerHTML = `
+
+                <div class="server-icon">
+                    🏠
+                </div>
+
+
+                <h2>
+                    ${server.name}
+                </h2>
+
+
+                <p>
+                    PixelBot Access Available
+                </p>
+
+
+                <div class="enter">
+                    ENTER →
+                </div>
+
+                `;
+
+
+
+                card.onclick = function(){
+
+                    window.location.href =
+                    "/server.html?id="
+                    +
+                    server.id;
+
+                };
+
+
+
+                grid.appendChild(card);
+
+
+            }
+        );
+
+
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        grid.innerHTML =
+        `
+        <p>
+        Unable to load servers
+        </p>
+        `;
+
+    }
+
+
+}
+
+
+
+loadUser();
+
+loadServers();
 
 
 </body>
