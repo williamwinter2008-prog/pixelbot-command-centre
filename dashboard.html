@@ -1,1 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PixelBot Dashboard</title>
+
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+
+body{
+
+min-height:100vh;
+
+font-family:Arial, sans-serif;
+
+color:white;
+
+background:
+
+radial-gradient(
+circle at top,
+rgba(37,99,235,0.25),
+transparent 40%
+),
+
+linear-gradient(
+135deg,
+#01030a,
+#020817,
+#04152d
+);
+
+}
+
+
+/* NAV */
+
+nav{
+
+height:80px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 50px;
+
+background:
+rgba(0,0,0,0.35);
+
+border-bottom:
+1px solid
+rgba(255,255,255,0.1);
+
+}
+
+
+
+.logo{
+
+font-size:22px;
+
+font-weight:bold;
+
+}
+
+
+.profile{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+color:#9fb4d4;
+
+}
+
+
+
+.profile img{
+
+width:40px;
+
+height:40px;
+
+border-radius:50%;
+
+}
+
+
+
+/* MAIN */
+
+.container{
+
+padding:50px;
+
+text-align:center;
+
+}
+
+
+
+h1{
+
+font-size:50px;
+
+margin-bottom:15px;
+
+}
+
+
+.blue{
+
+color:#4f8cff;
+
+}
+
+
+
+p{
+
+color:#8294b0;
+
+}
+
+
+
+.server-grid{
+
+margin-top:45px;
+
+display:grid;
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(260px,1fr)
+);
+
+gap:25px;
+
+}
+
+
+
+.server-card{
+
+padding:30px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,0.05);
+
+border:
+1px solid
+rgba(79,140,255,0.25);
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+
+
+.server-card:hover{
+
+transform:
+translateY(-8px);
+
+box-shadow:
+
+0 0 30px
+rgba(37,99,235,0.5);
+
+}
+
+
+
+.server-icon{
+
+font-size:45px;
+
+margin-bottom:20px;
+
+}
+
+
+
+.enter{
+
+margin-top:20px;
+
+display:inline-block;
+
+padding:10px 20px;
+
+background:#2563eb;
+
+border-radius:10px;
+
+}
+
+
+
+.status{
+
+margin-top:50px;
+
+color:#22c55e;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+
+<div class="logo">
+
+🌌 PixelBot
+
+</div>
+
+
+<div class="profile">
+
+<img id="avatar"
+src="https://cdn.discordapp.com/embed/avatars/0.png">
+
+
+<span id="username">
+Account
+</span>
+
+
+</div>
+
+
+</nav>
+
+
+
+<div class="container">
+
+
+<h1>
+
+Command
+<span class="blue">
+Centre
+</span>
+
+</h1>
+
+
+<p>
+
+Select a Discord server to manage PixelBot
+
+</p>
+
+
+
+<div
+class="server-grid"
+id="server-grid"
+>
+
+
+<p>
+Loading servers...
+</p>
+
+
+</div>
+
+
+
+<div class="status">
+
+🟢 PixelBot Online
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+async function loadUser(){
+
+
+const response =
+await fetch("/api/me");
+
+
+if(response.ok){
+
+
+const user =
+await response.json();
+
+
+
+document.getElementById(
+"username"
+).textContent =
+user.username;
+
+
+
+if(user.avatar){
+
+document.getElementById(
+"avatar"
+).src =
+
+`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+
+}
+
+
+}
+
+
+}
+
+
+
+
+
+async function loadServers(){
+
+
+const grid =
+document.getElementById(
+"server-grid"
+);
+
+
+
+const response =
+await fetch("/api/servers");
+
+
+
+const servers =
+await response.json();
+
+
+
+grid.innerHTML="";
+
+
+
+servers.forEach(server=>{
+
+
+const card =
+document.createElement("div");
+
+
+card.className =
+"server-card";
+
+
+card.innerHTML = `
+
+
+<div class="server-icon">
+🏠
+</div>
+
+
+<h2>
+${server.name}
+</h2>
+
+
+<p>
+Manage PixelBot
+</p>
+
+
+<div class="enter">
+ENTER →
+</div>
+
+
+`;
+
+
+
+card.onclick = ()=>{
+
+
+location.href =
+"/server.html?id="
++
+server.id;
+
+
+};
+
+
+
+grid.appendChild(card);
+
+
+});
+
+
+
+}
+
+
+
+
+
+loadUser();
+
+loadServers();
+
+
+</script>
+
+
+</body>
+
+</html>
