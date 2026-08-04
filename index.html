@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PixelBot — Command Centre</title>
+
+
+    <style>
+
+        /* ==================================================
+           GLOBAL RESET
+        ================================================== */
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+
+        /* ==================================================
+           BODY
+        ================================================== */
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: white;
+
+            background:
+
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(
+                        20,
+                        65,
+                        140,
+                        0.18
+                    ),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(
+                        15,
+                        45,
+                        110,
+                        0.15
+                    ),
+                    transparent 35%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #01030a,
+                    #020817,
+                    #030d20,
+                    #04152d
+                );
+
+            overflow-x:
+                hidden;
+
+        }
+
+
+        /* ==================================================
+           STAR FIELD
+        ================================================== */
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events:
+                none;
+
+            opacity:
+                0.15;
+
+            background-image:
+
+                radial-gradient(
+                    white 1px,
+                    transparent 1px
+                );
+
+            background-size:
+                140px 140px;
+
+            z-index:
+                0;
+
+        }
+
+
+        /* ==================================================
+           TOP NAVIGATION
+        ================================================== */
+
+        nav {
+
+            height:
+                76px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                0 55px;
+
+            background:
+                rgba(
+                    1,
+                    4,
+                    12,
+                    0.75
+                );
+
+            border-bottom:
+                1px solid
+                rgba(
+                    90,
+                    150,
+                    255,
+                    0.12
+                );
+
+            backdrop-filter:
+                blur(
+                    20px
+                );
+
+            position:
+                relative;
+
+            z-index:
+                10;
+
+        }
+
+
+        /* ==================================================
+           LOGO
+        ================================================== */
+
+        .logo {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            font-size:
+                21px;
+
+            font-weight:
+                bold;
+
+            letter-spacing:
+                0.5px;
+
+        }
+
+
+        .logo-symbol {
+
+            width:
+                40px;
+
+            height:
+                40px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                12px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #0f3d91,
+                    #071b45
+                );
+
+            border:
+                1px solid
+                rgba(
+                    80,
+                    150,
+                    255,
+                    0.3
+                );
+
+            box-shadow:
+
+                0 0 25px
+                rgba(
+                    30,
+                    100,
+                    255,
+                    0.2
+                );
+
+        }
+
+
+        /* ==================================================
+           NAVIGATION LINKS
+        ================================================== */
+
+        .nav-links {
+
+            display:
+                flex;
+
+            gap:
+                30px;
+
+        }
+
+
+        .nav-links a {
+
+            color:
+                #7f91aa;
+
+            text-decoration:
+                none;
+
+            font-size:
+                14px;
+
+            transition:
+                0.2s;
+
+        }
+
+
+        .nav-links a:hover {
+
+            color:
+                white;
+
+        }
+
+
+        /* ==================================================
+           LOGIN BUTTON
+        ================================================== */
+
+        .login-button {
+
+            padding:
+                11px 19px;
+
+            border-radius:
+                9px;
+
+            background:
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.15
+                );
+
+            border:
+                1px solid
+                rgba(
+                    59,
+                    130,
+                    246,
+                    0.35
+                );
+
+            color:
+                #b9d4ff;
+
+            text-decoration:
+                none;
+
+            font-size:
+                14px;
+
+            font-weight:
+                bold;
+
+            transition:
+                0.25s;
+
+        }
+
+
+        .login-button:hover {
+
+            background:
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.3
+                );
+
+            box-shadow:
+
+                0 0 25px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.2
+                );
+
+        }
+
+
+        /* ==================================================
+           MAIN HERO
+        ================================================== */
+
+        .hero {
+
+            min-height:
+                calc(
+                    100vh - 76px
+                );
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                70px 30px;
+
+            position:
+                relative;
+
+            z-index:
+                1;
+
+        }
+
+
+        .hero-content {
+
+            width:
+                100%;
+
+            max-width:
+                1050px;
+
+            text-align:
+                center;
+
+        }
+
+
+        /* ==================================================
+           STATUS LABEL
+        ================================================== */
+
+        .status {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                8px 14px;
+
+            margin-bottom:
+                28px;
+
+            border-radius:
+                999px;
+
+            background:
+                rgba(
+                    15,
+                    40,
+                    80,
+                    0.35
+                );
+
+            border:
+                1px solid
+                rgba(
+                    80,
+                    140,
+                    220,
+                    0.2
+                );
+
+            color:
+                #8ba9d1;
+
+            font-size:
+                13px;
+
+        }
+
+
+        .status-dot {
+
+            width:
+                7px;
+
+            height:
+                7px;
+
+            border-radius:
+                50%;
+
+            background:
+                #3b82f6;
+
+            box-shadow:
+
+                0 0 10px
+                #3b82f6;
+
+        }
+
+
+        /* ==================================================
+           MAIN TITLE
+        ================================================== */
+
+        h1 {
+
+            font-size:
+                clamp(
+                    48px,
+                    8vw,
+                    88px
+                );
+
+            line-height:
+                1.05;
+
+            letter-spacing:
+                -3px;
+
+            margin-bottom:
+                25px;
+
+        }
+
+
+        .title-blue {
+
+            color:
+                #4f91ff;
+
+            text-shadow:
+
+                0 0 40px
+                rgba(
+                    50,
+                    120,
+                    255,
+                    0.2
+                );
+
+        }
+
+
+        /* ==================================================
+           DESCRIPTION
+        ================================================== */
+
+        .description {
+
+            max-width:
+                620px;
+
+            margin:
+                0 auto 40px;
+
+            color:
+                #788ba5;
+
+            font-size:
+                17px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        /* ==================================================
+           COMMAND BUTTON
+        ================================================== */
+
+        .command-button {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            padding:
+                15px 26px;
+
+            border-radius:
+                10px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #1451b4,
+                    #0b3277
+                );
+
+            border:
+                1px solid
+                rgba(
+                    70,
+                    140,
+                    255,
+                    0.35
+                );
+
+            color:
+                white;
+
+            text-decoration:
+                none;
+
+            font-weight:
+                bold;
+
+            box-shadow:
+
+                0 0 35px
+                rgba(
+                    20,
+                    80,
+                    200,
+                    0.2
+                );
+
+            transition:
+                0.25s;
+
+        }
+
+
+        .command-button:hover {
+
+            transform:
+                translateY(
+                    -3px
+                );
+
+            box-shadow:
+
+                0 0 45px
+                rgba(
+                    30,
+                    100,
+                    255,
+                    0.35
+                );
+
+        }
+
+
+        /* ==================================================
+           COMMAND CENTRE PREVIEW
+        ================================================== */
+
+        .preview {
+
+            margin:
+                70px auto 0;
+
+            max-width:
+                850px;
+
+            padding:
+                25px;
+
+            border-radius:
+                18px;
+
+            background:
+                rgba(
+                    4,
+                    15,
+                    35,
+                    0.55
+                );
+
+            border:
+                1px solid
+                rgba(
+                    80,
+                    140,
+                    220,
+                    0.15
+                );
+
+            box-shadow:
+
+                0 30px 80px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.4
+                );
+
+            backdrop-filter:
+                blur(
+                    20px
+                );
+
+        }
+
+
+        .preview-header {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            margin-bottom:
+                20px;
+
+            color:
+                #6f87a8;
+
+            font-size:
+                12px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                1px;
+
+        }
+
+
+        .preview-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    1fr
+                );
+
+            gap:
+                12px;
+
+        }
+
+
+        .preview-item {
+
+            padding:
+                20px;
+
+            border-radius:
+                12px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.025
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.05
+                );
+
+            text-align:
+                left;
+
+            transition:
+                0.2s;
+
+        }
+
+
+        .preview-item:hover {
+
+            border-color:
+                rgba(
+                    60,
+                    130,
+                    255,
+                    0.3
+                );
+
+            background:
+                rgba(
+                    30,
+                    80,
+                    160,
+                    0.08
+                );
+
+        }
+
+
+        .preview-icon {
+
+            font-size:
+                22px;
+
+            margin-bottom:
+                12px;
+
+        }
+
+
+        .preview-item h3 {
+
+            font-size:
+                14px;
+
+            margin-bottom:
+                6px;
+
+        }
+
+
+        .preview-item p {
+
+            color:
+                #667b99;
+
+            font-size:
+                12px;
+
+        }
+
+
+        /* ==================================================
+           MOBILE
+        ================================================== */
+
+        @media (
+            max-width: 750px
+        ) {
+
+            nav {
+
+                padding:
+                    0 20px;
+
+            }
+
+
+            .nav-links {
+
+                display:
+                    none;
+
+            }
+
+
+            .hero {
+
+                padding:
+                    50px 20px;
+
+            }
+
+
+            h1 {
+
+                letter-spacing:
+                    -2px;
+
+            }
+
+
+            .preview-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         NAVIGATION
+    ================================================== -->
+
+    <nav>
+
+
+        <div class="logo">
+
+
+            <div class="logo-symbol">
+
+                🌌
+
+            </div>
+
+
+            PixelBot
+
+
+        </div>
+
+
+
+        <div class="nav-links">
+
+            <a href="#">
+
+                Home
+
+            </a>
+
+            <a href="#">
+
+                Features
+
+            </a>
+
+            <a href="#">
+
+                Premium
+
+            </a>
+
+        </div>
+
+
+
+        <a
+            href="/api/discord-login"
+            class="login-button"
+        >
+
+            Login with Discord
+
+        </a>
+
+
+    </nav>
+
+
+
+    <!-- ==================================================
+         HERO
+    ================================================== -->
+
+    <main
+        class="hero"
+    >
+
+
+        <div
+            class="hero-content"
+        >
+
+
+            <div
+                class="status"
+            >
+
+                <span
+                    class="status-dot"
+                ></span>
+
+                PixelBot Command Centre
+
+            </div>
+
+
+
+            <h1>
+
+                Your server.
+
+                <span
+                    class="title-blue"
+                >
+
+                    Your command.
+
+                </span>
+
+            </h1>
+
+
+
+            <p
+                class="description"
+            >
+
+                A powerful command centre for
+                managing your Discord communities.
+                Control your server, configure PixelBot,
+                and keep everything in one place.
+
+            </p>
+
+
+
+            <a
+                href="/api/discord-login"
+                class="command-button"
+            >
+
+                Enter Command Centre
+
+                →
+
+            </a>
+
+
+
+            <!-- ==================================================
+                 PREVIEW
+            ================================================== -->
+
+            <div
+                class="preview"
+            >
+
+
+                <div
+                    class="preview-header"
+                >
+
+                    <span>
+
+                        PixelBot Systems
+
+                    </span>
+
+                    <span>
+
+                        ● Online
+
+                    </span>
+
+                </div>
+
+
+
+                <div
+                    class="preview-grid"
+                >
+
+
+                    <div
+                        class="preview-item"
+                    >
+
+                        <div
+                            class="preview-icon"
+                        >
+
+                            🛡️
+
+                        </div>
+
+                        <h3>
+
+                            Moderation
+
+                        </h3>
+
+                        <p>
+
+                            Keep your community safe.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <div
+                        class="preview-item"
+                    >
+
+                        <div
+                            class="preview-icon"
+                        >
+
+                            📈
+
+                        </div>
+
+                        <h3>
+
+                            Leveling
+
+                        </h3>
+
+                        <p>
+
+                            Reward your community.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <div
+                        class="preview-item"
+                    >
+
+                        <div
+                            class="preview-icon"
+                        >
+
+                            ⚙️
+
+                        </div>
+
+                        <h3>
+
+                            Configuration
+
+                        </h3>
+
+                        <p>
+
+                            Configure PixelBot your way.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>
